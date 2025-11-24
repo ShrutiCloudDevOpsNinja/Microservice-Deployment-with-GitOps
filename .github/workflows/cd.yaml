@@ -31,11 +31,11 @@ jobs:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-         enable-oidc: true
+        enable-oidc: true
 
     - name: Get AKS admin credentials
       run: |
-        echo "🔐 Fetching AKS Admin Credentials"
+        echo "Fetching AKS Admin Credentials"
         az aks get-credentials \
           --resource-group "$AKS_RG" \
           --name "$AKS_NAME" \
@@ -44,7 +44,7 @@ jobs:
 
     - name: Apply manifests
       run: |
-        echo "📦 Applying manifests from all microservices..."
+        echo "Applying manifests from all microservices..."
         kubectl apply -f AddTaskTodoMicroservice/manifests/
         kubectl apply -f DeleteTaskTodoMicroservice/manifests/
         kubectl apply -f GetTasksTodoMicroservice/manifests/
@@ -64,7 +64,7 @@ jobs:
 
         for dep in "${!images[@]}"; do
           image="${images[$dep]}"
-          echo "🚀 Updating deployment $dep -> $image"
+          echo "Updating deployment $dep -> $image"
 
           kubectl patch deployment "$dep" -n default \
             --type='json' \
